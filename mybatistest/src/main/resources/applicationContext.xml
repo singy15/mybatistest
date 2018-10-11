@@ -1,0 +1,79 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+  http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-4.2.xsd
+  http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+<!--   <bean id="MUserMapper" class="sample.mybatis.mapper.MUserMapper"></bean> -->
+
+
+<mybatis:scan base-package="sample.mybatis.mapper" />
+
+  <context:component-scan base-package="sample" />
+  <bean id="sample1" class="sample.simple.Sample1"></bean>
+<!--   <bean id="sample3" class="sample.simple.Sample3"></bean> -->
+  <bean id="testApp" class="sample.TestApp"></bean>
+
+
+<!--   <bean id="dataSource" class="javax.activation.DataSource"> -->
+<!--     <property name="driver" value="org.postgresql.Driver"/> -->
+<!--     <property name="url" value="jdbc:postgresql://localhost:5432/mybatistest"/> -->
+<!--     <property name="username" value="mybatistestuser"/> -->
+<!--     <property name="password" value="mybatistestuserpasswd"/> -->
+<!--   </bean> -->
+
+<!--     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"> -->
+<!--     <property name="driver" value="org.postgresql.Driver"/> -->
+<!--     <property name="url" value="jdbc:postgresql://localhost:5432/mybatistest"/> -->
+<!--     <property name="username" value="mybatistestuser"/> -->
+<!--     <property name="password" value="mybatistestuserpasswd"/> -->
+<!--     </bean> -->
+
+  <bean id="dataSource"
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="org.postgresql.Driver" />
+    <property name="url" value="jdbc:postgresql://localhost:5432/mybatistest" />
+<!--     <property name="username" value="postgres" /> -->
+<!--     <property name="password" value="ps" /> -->
+    <property name="username" value="mybatistestuser"/>
+    <property name="password" value="mybatistestuserpasswd"/>
+  </bean>
+
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="configuration">
+      <bean class="org.apache.ibatis.session.Configuration">
+<!--         <property name="logImpl" value="LOG4J"/> -->
+        <property name="mapUnderscoreToCamelCase" value="true"/>
+      </bean>
+    </property>
+  </bean>
+
+<!--   <bean id="mUserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> -->
+<!--     <property name="mapperInterface" value="sample.mybatis.mapper.MUserMapper" /> -->
+<!--     <property name="sqlSessionFactory" ref="sqlSessionFactory" /> -->
+<!--   </bean> -->
+<!--   <bean id="tItemMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> -->
+<!--     <property name="mapperInterface" value="sample.mybatis.mapper.TItemMapper" /> -->
+<!--     <property name="sqlSessionFactory" ref="sqlSessionFactory" /> -->
+<!--   </bean> -->
+<!--     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> -->
+<!--         <property name="basePackage" value="sample.mybatis.mapper" /> -->
+<!--         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" /> -->
+<!--     </bean> -->
+<!--     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> -->
+<!--         <property name="basePackage" value="sample.mybatis.mapper" /> -->
+<!--     </bean> -->
+
+
+
+  <aop:aspectj-autoproxy />
+
+</beans>
